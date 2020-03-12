@@ -49,10 +49,6 @@ make help
 
 ![Bucket Fill Image](images/Bucket_Fill.png?raw=true "Bucket Fill")
 
-### Swapping Objects
-
-![Swapping Objects Image](images/Swapping_Objects.png?raw=true "Swapping Objects")
-
 ### Enigma
 
 ![Enigma Image](images/Enigma.png?raw=true "Enigma")

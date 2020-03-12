@@ -77,3 +77,10 @@ BOOST_AUTO_TEST_CASE(test_BucketFill) {
     int res = slt.BucketFill(data);
     BOOST_CHECK(res == 5);
 }
+
+BOOST_AUTO_TEST_CASE(test_Enigma) {
+    Solution slt;
+    // Enigma
+    int res = slt.Enigma(3, 2, 4);
+    BOOST_CHECK(res == 6);
+}

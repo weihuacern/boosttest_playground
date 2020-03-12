@@ -1,13 +1,3 @@
-#include <algorithm>
-#include <cmath>
-#include <iostream>
-#include <map>
-#include <set>
-#include <string>
-#include <unordered_map>
-#include <utility>
-#include <vector>
-
 #include "solution.hpp"
 
 Solution::Solution() {
@@ -108,8 +98,7 @@ int Solution::FactorOf3And5(int l, int r) {
     return cnt;
 }
 
-// Helper function
-int getBitCount(int num) {
+int AscendingBinarySorting::_getBitCount(int num) {
     int cnt = 0;
     while(num) {
         if(num & 1 == 1) {
@@ -119,10 +108,9 @@ int getBitCount(int num) {
     return cnt;
 }
 
-// Helper function
-int compare(int num1, int num2) {
-    int cnt1 = getBitCount(num1);
-    int cnt2 = getBitCount(num2);
+int AscendingBinarySorting::_compare(int num1, int num2) {
+    int cnt1 = _getBitCount(num1);
+    int cnt2 = _getBitCount(num2);
     if(cnt1 < cnt2) {
         return 1;
     } else if (cnt1 == cnt2) {
@@ -137,12 +125,13 @@ int compare(int num1, int num2) {
 }
 
 std::vector<int> Solution::AscendingBinarySorting(std::vector<int>& nums) {
+    using namespace AscendingBinarySorting;
     std::vector<int> res(nums);;
-    std::sort(res.begin(), res.end(), compare);
+    std::sort(res.begin(), res.end(), _compare);
     return res;
 }
 
-int _find(std::unordered_map<int, std::pair<int, int>>& parents, int node) {
+int ConnectingComputers::_find(std::unordered_map<int, std::pair<int, int>>& parents, int node) {
     // If not in parend yet, set it
     if (parents.find(node) == parents.end()) {
         parents[node] = {node, 1};
@@ -155,7 +144,7 @@ int _find(std::unordered_map<int, std::pair<int, int>>& parents, int node) {
     return node;
 }
     
-void _union(std::unordered_map<int, std::pair<int, int>>& parents, int nodeA, int nodeB, int& redundantConns) {
+void ConnectingComputers::_union(std::unordered_map<int, std::pair<int, int>>& parents, int nodeA, int nodeB, int& redundantConns) {
     int parentA = _find(parents, nodeA);
     int parentB = _find(parents, nodeB);
     // If same parent, no need to union, count redundant connections
@@ -175,6 +164,7 @@ void _union(std::unordered_map<int, std::pair<int, int>>& parents, int nodeA, in
 }
 
 int Solution::ConnectingComputers(int nNodes, int nEdges, std::vector<int>& nodeF, std::vector<int>& nodeT) {
+    using namespace ConnectingComputers; 
     int redundantConns = 0;
     // Parents, key is child node ID, value is a pair of (parent node ID, number of children of this parent)
     std::unordered_map<int, std::pair<int, int>> parents;
@@ -197,7 +187,7 @@ int Solution::ConnectingComputers(int nNodes, int nEdges, std::vector<int>& node
     return -1;
 }
 
-void increment_counter(int prev, int post, std::vector<int>& counter) {
+void CircularArray::_increment_counter(int prev, int post, std::vector<int>& counter) {
     if (prev < post) {
         for (int i=prev; i<=post; i++) {
             counter[i] += 1;
@@ -216,9 +206,10 @@ void increment_counter(int prev, int post, std::vector<int>& counter) {
 }
 
 int Solution::CircularArray(int n, int m, std::vector<int>& endNode) {
+    using namespace CircularArray;
     std::vector<int> cnt(n, 0);
     for (int i=0; i<m-2; i++) {
-        increment_counter(endNode.at(i), endNode.at(i+1), cnt);
+        _increment_counter(endNode.at(i), endNode.at(i+1), cnt);
     }
 
     int res = 1, tmpcnt = 0;
@@ -237,6 +228,106 @@ int Solution::CircularArray(int n, int m, std::vector<int>& endNode) {
     return res;
 }
 
+int BucketFill::_find(std::unordered_map<int, int>& parents, int point) {
+    // If not in parend yet, set it
+    if (parents.find(point) == parents.end()) {
+        parents[point] = point;
+        return point;
+    }
+
+    while (point != parents.at(point)) {
+        point = parents.at(point);
+    }
+    return point;
+}
+
+void BucketFill::_union(std::unordered_map<int, int>& parents, int pointA, int pointB) {
+    int parentA = _find(parents, pointA);
+    int parentB = _find(parents, pointB);
+    // If same parent, no need to union
+    if (parentA == parentB) {
+        return;
+    }
+
+    // Union
+    if (parentA <= parentB) {
+        parents.at(parentB) = parentA;
+    } else {
+        parents.at(parentA) = parentB;
+    }
+}
+
+int BucketFill::_getPointFromRowCol(int row, int col, int ncol) {
+    return row*ncol+col;
+}
+
+std::pair<int, int> BucketFill::_getRowColFromPoint(int point, int ncol) {
+    int row = point/ncol, col = point%ncol;
+    std::pair<int, int> rcPair = {row, col};
+    return rcPair;
+}
+
 int Solution::BucketFill(std::vector<std::string>& picture) {
-    return 1;
+    using namespace BucketFill;
+    int nrow = picture.size();
+    if (nrow == 0) {
+        return 0;
+    }
+    int ncol = picture.at(0).size();
+    // Parents, key is point ID from row and col, value is point ID for its parent point
+    std::unordered_map<int, int> parents;
+    for (int i=0; i<nrow; i++) {
+        for (int j=0; j<ncol; j++) {
+            int point = _getPointFromRowCol(i, j, ncol);
+            parents[point] = point;
+        }
+    }
+    
+    for (int i=0; i<nrow; i++) {
+        for (int j=0; j<ncol; j++) {
+            int u=i-1, d=i+1, l=j-1, r=j+1;
+            int point = _getPointFromRowCol(i, j, ncol);
+            if (u>=0 && picture.at(i).at(j) == picture.at(u).at(j)) {
+                int otherPoint = _getPointFromRowCol(u, j, ncol);
+                _union(parents, point, otherPoint);
+            }
+            if (d<nrow && picture.at(i).at(j) == picture.at(d).at(j)) {
+                int otherPoint = _getPointFromRowCol(d, j, ncol);
+                _union(parents, point, otherPoint);
+            }
+            if (l>=0 && picture.at(i).at(j) == picture.at(i).at(l)) {
+                int otherPoint = _getPointFromRowCol(i, l, ncol);
+                _union(parents, point, otherPoint);
+            }
+            if (r<ncol && picture.at(i).at(j) == picture.at(i).at(r)) {
+                int otherPoint = _getPointFromRowCol(i, r, ncol);
+                _union(parents, point, otherPoint);
+            }
+        }
+    }
+
+    std::set<int> colorSet;
+    for (auto& p : parents) {
+        colorSet.insert(_find(parents, p.second));
+    }
+
+    return colorSet.size();
+}
+
+int Solution::Enigma(int rotorCount, int minRotorValue, int maxRotorValue) {
+    long long int cnt = 0;
+	std::unordered_map<int, int> gcdMap;
+	for (int i=minRotorValue; i<=maxRotorValue; i++)
+	{
+		for (int j = minRotorValue; j <= maxRotorValue; j++)
+		{
+			if (std::__gcd(i, j) == 1)
+				gcdMap[i]++;
+		}
+	}
+
+    for (auto it=gcdMap.begin(); it!=gcdMap.end(); it++) {
+        cnt += pow(it->second, rotorCount-1);
+    }
+	return cnt;
 }

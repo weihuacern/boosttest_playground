@@ -52,3 +52,7 @@ make help
 ### Enigma
 
 ![Enigma Image](images/Enigma.png?raw=true "Enigma")
+
+### Oscillating String
+
+![Oscillating String Image](images/Oscillating_String.jpg?raw=true "Oscillating String")

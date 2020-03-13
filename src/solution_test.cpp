@@ -84,3 +84,11 @@ BOOST_AUTO_TEST_CASE(test_Enigma) {
     int res = slt.Enigma(3, 2, 4);
     BOOST_CHECK(res == 6);
 }
+
+BOOST_AUTO_TEST_CASE(test_OscillatingString) {
+    Solution slt;
+    // Oscillating String
+    std::string res = slt.OscillatingString("ababyz");
+    std::string exp = std::string("abyzba");
+    BOOST_TEST(res == exp);
+}

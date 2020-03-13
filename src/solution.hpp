@@ -24,6 +24,7 @@ class Solution {
     int CircularArray(int n, int m, std::vector<int>& endNode);
     int BucketFill(std::vector<std::string>& picture);
     int Enigma(int rotorCount, int minRotorValue, int maxRotorValue);
+    std::string OscillatingString(std::string s);
 };
 
 namespace AscendingBinarySorting {

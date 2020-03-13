@@ -331,3 +331,38 @@ int Solution::Enigma(int rotorCount, int minRotorValue, int maxRotorValue) {
     }
 	return cnt;
 }
+
+std::string Solution::OscillatingString(std::string s) {
+    std::string res;
+    std::unordered_map<char, int> cntMap;
+    for (auto c: s) {
+        cntMap[c] += 1;
+    }
+
+    std::vector<std::pair<char, int>> charVec;
+    for (auto &e: cntMap) {
+        charVec.push_back({e.first, e.second});
+    }
+    std::sort(charVec.begin(), charVec.end());
+
+    bool flag = true;
+    while (res.size() != s.size()) {
+        if (flag) {
+            for (auto it=charVec.begin(); it != charVec.end(); it++) {
+                if ((*it).second > 0) {
+                    res.push_back((*it).first);
+                    (*it).second -= 1; 
+                }
+            }
+        } else {
+            for (auto it=charVec.rbegin(); it != charVec.rend(); it++) {
+                if ((*it).second > 0) {
+                    res.push_back((*it).first);
+                    (*it).second -= 1; 
+                }
+            }
+        }
+        flag = !flag;
+    }
+    return res;
+}

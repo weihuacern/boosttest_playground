@@ -1,3 +1,5 @@
+#include <boost/mpl/list.hpp>
+
 #include "solution.hpp"
 
 Solution::Solution() {
@@ -98,29 +100,30 @@ int Solution::FactorOf3And5(int l, int r) {
     return cnt;
 }
 
-int AscendingBinarySorting::_getBitCount(int num) {
-    int cnt = 0;
-    while(num) {
-        if(num & 1 == 1) {
-            cnt++;}
-        num = num >> 1;
+namespace AscendingBinarySorting {
+    int _getBitCount(int num) {
+        int cnt = 0;
+        while(num) {
+            if(num & 1 == 1) { cnt++; }
+            num = num >> 1;
+        }
+        return cnt;
     }
-    return cnt;
-}
 
-int AscendingBinarySorting::_compare(int num1, int num2) {
-    int cnt1 = _getBitCount(num1);
-    int cnt2 = _getBitCount(num2);
-    if(cnt1 < cnt2) {
-        return 1;
-    } else if (cnt1 == cnt2) {
-        if (num1 <= num2) {
+    int _compare(int num1, int num2) {
+        int cnt1 = _getBitCount(num1);
+        int cnt2 = _getBitCount(num2);
+        if(cnt1 < cnt2) {
             return 1;
+        } else if (cnt1 == cnt2) {
+            if (num1 <= num2) {
+                return 1;
+            } else {
+                return 0;
+            }
         } else {
             return 0;
         }
-    } else {
-        return 0;
     }
 }
 
@@ -131,35 +134,37 @@ std::vector<int> Solution::AscendingBinarySorting(std::vector<int>& nums) {
     return res;
 }
 
-int ConnectingComputers::_find(std::unordered_map<int, std::pair<int, int>>& parents, int node) {
-    // If not in parend yet, set it
-    if (parents.find(node) == parents.end()) {
-        parents[node] = {node, 1};
+namespace ConnectingComputers {
+    int _find(std::unordered_map<int, std::pair<int, int>>& parents, int node) {
+        // If not in parend yet, set it
+        if (parents.find(node) == parents.end()) {
+            parents[node] = {node, 1};
+            return node;
+        }
+
+        while (node != parents.at(node).first) {
+            node = parents.at(node).first;
+        }
         return node;
     }
-
-    while (node != parents.at(node).first) {
-        node = parents.at(node).first;
-    }
-    return node;
-}
     
-void ConnectingComputers::_union(std::unordered_map<int, std::pair<int, int>>& parents, int nodeA, int nodeB, int& redundantConns) {
-    int parentA = _find(parents, nodeA);
-    int parentB = _find(parents, nodeB);
-    // If same parent, no need to union, count redundant connections
-    if (parentA == parentB) {
-        ++redundantConns;
-        return;
-    }
+    void _union(std::unordered_map<int, std::pair<int, int>>& parents, int nodeA, int nodeB, int& redundantConns) {
+        int parentA = _find(parents, nodeA);
+        int parentB = _find(parents, nodeB);
+        // If same parent, no need to union, count redundant connections
+        if (parentA == parentB) {
+            ++redundantConns;
+            return;
+        }
 
-    // Union
-    if (parents.at(parentA).second >= parents.at(parentB).second) {
-        parents.at(parentB).first = parentA;
-        parents.at(parentA).second += parents.at(parentB).second;
-    } else {
-        parents.at(parentA).first = parentB;
-        parents.at(parentB).second += parents.at(parentA).second;
+        // Union
+        if (parents.at(parentA).second >= parents.at(parentB).second) {
+            parents.at(parentB).first = parentA;
+            parents.at(parentA).second += parents.at(parentB).second;
+        } else {
+            parents.at(parentA).first = parentB;
+            parents.at(parentB).second += parents.at(parentA).second;
+        }
     }
 }
 
@@ -187,22 +192,24 @@ int Solution::ConnectingComputers(int nNodes, int nEdges, std::vector<int>& node
     return -1;
 }
 
-void CircularArray::_increment_counter(int prev, int post, std::vector<int>& counter) {
-    if (prev < post) {
-        for (int i=prev; i<=post; i++) {
-            counter[i] += 1;
+namespace CircularArray {
+    void _increment_counter(int prev, int post, std::vector<int>& counter) {
+        if (prev < post) {
+            for (int i=prev; i<=post; i++) {
+                counter[i] += 1;
+            }
+        } else if (prev > post) {
+            for (int i=0; i<=prev; i++) {
+                counter[i] += 1;
+            }
+            for (int i=post; i<counter.size(); i++) {
+                counter[i] += 1;
+            }
+        } else {
+            return;
         }
-    } else if (prev > post) {
-        for (int i=0; i<=prev; i++) {
-            counter[i] += 1;
-        }
-        for (int i=post; i<counter.size(); i++) {
-            counter[i] += 1;
-        }
-    } else {
         return;
     }
-    return;
 }
 
 int Solution::CircularArray(int n, int m, std::vector<int>& endNode) {
@@ -228,43 +235,43 @@ int Solution::CircularArray(int n, int m, std::vector<int>& endNode) {
     return res;
 }
 
-int BucketFill::_find(std::unordered_map<int, int>& parents, int point) {
-    // If not in parend yet, set it
-    if (parents.find(point) == parents.end()) {
-        parents[point] = point;
+namespace BucketFill {
+    int _find(std::unordered_map<int, int>& parents, int point) {
+        // If not in parend yet, set it
+        if (parents.find(point) == parents.end()) {
+            parents[point] = point;
+            return point;
+        }
+
+        while (point != parents.at(point)) {
+            point = parents.at(point);
+        }
         return point;
     }
 
-    while (point != parents.at(point)) {
-        point = parents.at(point);
+    void _union(std::unordered_map<int, int>& parents, int pointA, int pointB) {
+        int parentA = _find(parents, pointA);
+        int parentB = _find(parents, pointB);
+        // If same parent, no need to union
+        if (parentA == parentB) { return; }
+
+        // Union
+        if (parentA <= parentB) {
+            parents.at(parentB) = parentA;
+        } else {
+            parents.at(parentA) = parentB;
+        }
     }
-    return point;
-}
 
-void BucketFill::_union(std::unordered_map<int, int>& parents, int pointA, int pointB) {
-    int parentA = _find(parents, pointA);
-    int parentB = _find(parents, pointB);
-    // If same parent, no need to union
-    if (parentA == parentB) {
-        return;
+    int _getPointFromRowCol(int row, int col, int ncol) {
+        return row*ncol+col;
     }
 
-    // Union
-    if (parentA <= parentB) {
-        parents.at(parentB) = parentA;
-    } else {
-        parents.at(parentA) = parentB;
+    std::pair<int, int> _getRowColFromPoint(int point, int ncol) {
+        int row = point/ncol, col = point%ncol;
+        std::pair<int, int> rcPair = {row, col};
+        return rcPair;
     }
-}
-
-int BucketFill::_getPointFromRowCol(int row, int col, int ncol) {
-    return row*ncol+col;
-}
-
-std::pair<int, int> BucketFill::_getRowColFromPoint(int point, int ncol) {
-    int row = point/ncol, col = point%ncol;
-    std::pair<int, int> rcPair = {row, col};
-    return rcPair;
 }
 
 int Solution::BucketFill(std::vector<std::string>& picture) {
@@ -365,4 +372,32 @@ std::string Solution::OscillatingString(std::string s) {
         flag = !flag;
     }
     return res;
+}
+
+namespace QuickSort {
+    template <typename T> int _partition(std::vector<T>& nums, int lo, int hi) {
+        int pivot = nums[hi];
+        int mid = lo - 1;
+        for (int i = lo; i <= hi - 1; i++) {
+            if (nums[i] < pivot) {
+                mid++;
+                std::swap(nums[mid], nums[i]);
+                }
+        }
+        std::swap(nums[mid+1], nums[hi]);
+        return (mid+1);
+    }
+
+    template <typename T> void _quickSort(std::vector<T>& nums, int lo, int hi) {
+        if (lo < hi) {
+            int mid = _partition<T>(nums, lo, hi);
+            _quickSort<T>(nums, lo, mid-1);
+            _quickSort<T>(nums, mid+1, hi);
+        }
+    }
+}
+
+template <typename T> void Solution::QuickSort(std::vector<T>& nums) {
+    int n = nums.size();
+    QuickSort::_quickSort<T>(nums, 0, n-1);
 }

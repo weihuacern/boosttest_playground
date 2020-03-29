@@ -18,7 +18,7 @@ namespace huawei {
 	    iterator _end; // last of used element
 	    iterator _end_of_storage; // last of whole capacity
     public:
-	    vector() :_start(0), _end(0), _end_of_storage(0){} // default constructor
+	    vector() : _start(0), _end(0), _end_of_storage(0){} // default constructor
 	    vector(size_type n, const T& value);
 	    vector(size_type n);
 	    vector(iterator first, iterator last);

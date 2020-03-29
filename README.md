@@ -76,3 +76,11 @@ make vector
 ```
 
 ### Self-defined unique_ptr
+
+- [C++ std unique_ptr API](http://www.cplusplus.com/reference/memory/unique_ptr/)
+- [gcc-8.4.0, std, memory, unique_ptr](https://github.com/gcc-mirror/gcc/blob/releases/gcc-8.4.0/libstdc%2B%2B-v3/include/bits/unique_ptr.h)
+
+```bash
+make unique_ptr
+./unique_ptr
+```

@@ -1,6 +1,7 @@
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE solution_test
 #include <boost/test/included/unit_test.hpp>
+#include <boost/mpl/list.hpp>
 
 #include "solution.hpp"
 
@@ -92,3 +93,18 @@ BOOST_AUTO_TEST_CASE(test_OscillatingString) {
     std::string exp = std::string("abyzba");
     BOOST_TEST(res == exp);
 }
+
+/*
+BOOST_AUTO_TEST_CASE(test_QuickSort) {
+    //Solution slt;
+    // Quick Sort
+    std::vector<int> res1 = {13, 4, 5, 87, 120};
+    std::vector<int> exp1 = {4, 5, 12, 87, 120};
+    int n1 = res1.size();
+    QuickSort::_quickSort(res1, 0, n1-1);
+    //slt.QuickSort(res1);
+    BOOST_CHECK_EQUAL_COLLECTIONS(
+        res1.begin(), res1.end(),
+        exp1.begin(), exp1.end());
+}
+*/

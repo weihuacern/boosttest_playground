@@ -56,3 +56,23 @@ make help
 ### Oscillating String
 
 ![Oscillating String Image](images/Oscillating_String.jpg?raw=true "Oscillating String")
+
+### QuickSort
+
+First partition and then recursion.
+
+### MergeSort
+
+First recursion and then merge.
+
+### Self-defined vector
+
+- [C++ std vector API](http://www.cplusplus.com/reference/vector/vector/)
+- [gcc-8.4.0, std, vector](https://github.com/gcc-mirror/gcc/blob/releases/gcc-8.4.0/libstdc%2B%2B-v3/include/std/vector), [gcc-8.4.0, std, stl_vector](https://github.com/gcc-mirror/gcc/blob/releases/gcc-8.4.0/libstdc%2B%2B-v3/include/bits/stl_vector.h) and [gcc-8.4.0, std, stl_bvector](https://github.com/gcc-mirror/gcc/blob/releases/gcc-8.4.0/libstdc%2B%2B-v3/include/bits/stl_bvector.h)
+
+```bash
+make vector
+./vector
+```
+
+### Self-defined unique_ptr

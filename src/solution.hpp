@@ -25,6 +25,8 @@ class Solution {
     int BucketFill(std::vector<std::string>& picture);
     int Enigma(int rotorCount, int minRotorValue, int maxRotorValue);
     std::string OscillatingString(std::string s);
+    template <typename T> void QuickSort(std::vector<T>& nums);
+    //std::vector<int> MergeSort(std::vector<int>& nums);
 };
 
 namespace AscendingBinarySorting {
@@ -46,4 +48,9 @@ namespace BucketFill {
     void _union(std::unordered_map<int, int>& parents, int pointA, int pointB);
     int _getPointFromRowCol(int row, int col, int ncol);
     std::pair<int, int> _getRowColFromPoint(int point, int ncol);
+}
+
+namespace QuickSort {
+    template <typename T> int _partition(std::vector<T>& nums, int lo, int hi);
+    template <typename T> void _quickSort(std::vector<T>& nums, int lo, int hi);
 }

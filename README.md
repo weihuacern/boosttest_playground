@@ -67,8 +67,8 @@ First recursion and then merge.
 
 ### Self-defined vector
 
-- [C++ std vector API](http://www.cplusplus.com/reference/vector/vector/)
-- [gcc-8.4.0, std, vector](https://github.com/gcc-mirror/gcc/blob/releases/gcc-8.4.0/libstdc%2B%2B-v3/include/std/vector), [gcc-8.4.0, std, stl_vector](https://github.com/gcc-mirror/gcc/blob/releases/gcc-8.4.0/libstdc%2B%2B-v3/include/bits/stl_vector.h) and [gcc-8.4.0, std, stl_bvector](https://github.com/gcc-mirror/gcc/blob/releases/gcc-8.4.0/libstdc%2B%2B-v3/include/bits/stl_bvector.h)
+- [C++ STL vector API](http://www.cplusplus.com/reference/vector/vector/)
+- [gcc-8.4.0, STL, vector](https://github.com/gcc-mirror/gcc/blob/releases/gcc-8.4.0/libstdc%2B%2B-v3/include/std/vector), [gcc-8.4.0, std, stl_vector](https://github.com/gcc-mirror/gcc/blob/releases/gcc-8.4.0/libstdc%2B%2B-v3/include/bits/stl_vector.h) and [gcc-8.4.0, std, stl_bvector](https://github.com/gcc-mirror/gcc/blob/releases/gcc-8.4.0/libstdc%2B%2B-v3/include/bits/stl_bvector.h)
 
 ```bash
 make vector
@@ -77,10 +77,16 @@ make vector
 
 ### Self-defined unique_ptr
 
-- [C++ std unique_ptr API](http://www.cplusplus.com/reference/memory/unique_ptr/)
-- [gcc-8.4.0, std, memory, unique_ptr](https://github.com/gcc-mirror/gcc/blob/releases/gcc-8.4.0/libstdc%2B%2B-v3/include/bits/unique_ptr.h)
+- [C++ STL unique_ptr API](http://www.cplusplus.com/reference/memory/unique_ptr/)
+- [gcc-8.4.0, STL, memory, unique_ptr](https://github.com/gcc-mirror/gcc/blob/releases/gcc-8.4.0/libstdc%2B%2B-v3/include/bits/unique_ptr.h)
 
 ```bash
 make unique_ptr
 ./unique_ptr
 ```
+
+### Red-black tree
+
+- [C++, STL, set](http://www.cplusplus.com/reference/set/set/)
+- [C++, STL, map](http://www.cplusplus.com/reference/map/map/)
+- [Linux, Completely Fair Scheduler](https://developer.ibm.com/tutorials/l-completely-fair-scheduler/), [Linux v5.5, CFS](https://github.com/torvalds/linux/blob/v5.5/kernel/sched/fair.c)

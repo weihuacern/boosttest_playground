@@ -323,20 +323,20 @@ int Solution::BucketFill(std::vector<std::string>& picture) {
 
 int Solution::Enigma(int rotorCount, int minRotorValue, int maxRotorValue) {
     long long int cnt = 0;
-	std::unordered_map<int, int> gcdMap;
-	for (int i=minRotorValue; i<=maxRotorValue; i++)
-	{
-		for (int j = minRotorValue; j <= maxRotorValue; j++)
-		{
-			if (std::__gcd(i, j) == 1)
-				gcdMap[i]++;
-		}
-	}
+    std::unordered_map<int, int> gcdMap;
+    for (int i=minRotorValue; i<=maxRotorValue; i++)
+    {
+        for (int j = minRotorValue; j <= maxRotorValue; j++)
+        {
+            if (std::__gcd(i, j) == 1)
+                gcdMap[i]++;
+        }
+    }
 
     for (auto it=gcdMap.begin(); it!=gcdMap.end(); it++) {
         cnt += pow(it->second, rotorCount-1);
     }
-	return cnt;
+    return cnt;
 }
 
 std::string Solution::OscillatingString(std::string s) {
